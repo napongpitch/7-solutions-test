@@ -21,7 +21,11 @@ export const TodoListOwn: FC<TTodoListOwnProps> = ({
         <Grid2 container rowSpacing={2}>
           {todos.map(({ name, type }) => (
             <Grid2 size={12} key={name}>
-              <TodoItem name={name} onClick={() => removeTodo(name, type)} />
+              <TodoItem
+                dataTestId={`todo-item-${type}-${name}`}
+                name={name}
+                onClick={() => removeTodo(name, type)}
+              />
             </Grid2>
           ))}
         </Grid2>

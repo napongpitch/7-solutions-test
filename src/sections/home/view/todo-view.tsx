@@ -5,7 +5,7 @@ import { TodoListAll } from "../todo-list-all";
 import { TodoListOwn } from "../todo-list-own";
 
 export const TodoView: FC = () => {
-  const refTimeouts = useRef<{ name: string; timeout: number }[]>([]);
+  const refTimeouts = useRef<{ name: string; timeout: NodeJS.Timeout }[]>([]);
   const [todos, setTodos] = useState(MOCK_TODOS);
   const [todoVegetables, setTodoVegetables] = useState<TTodoItem[]>([]);
   const [todoFruits, setTodoFruits] = useState<TTodoItem[]>([]);
@@ -67,7 +67,7 @@ export const TodoView: FC = () => {
 };
 
 // ----------------------------------------
-const MOCK_TODOS: TTodoItem[] = [
+export const MOCK_TODOS: TTodoItem[] = [
   {
     type: "Fruit",
     name: "Apple",

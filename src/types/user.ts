@@ -22,7 +22,7 @@ export type TUser = {
   phone: string;
   username: string;
   password: string;
-  birthDate: "1996-5-30"; // "YYYY-M-DD"
+  birthDate: string; // "YYYY-M-DD"
   image: string;
   bloodGroup: string;
   height: number;
@@ -59,3 +59,13 @@ export type TUser = {
   };
   role: string;
 };
+
+export type TDepartmentDataResult = {
+  male: number;
+  female: number;
+  ageRange: string;
+  hair: Record<string, number>;
+  addressUser: Record<string, string>;
+};
+
+export type TResult = Record<string, TDepartmentDataResult>;

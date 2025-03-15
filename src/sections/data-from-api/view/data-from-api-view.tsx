@@ -1,35 +1,11 @@
 import axios from "axios";
 import { useEffect, useState, type FC } from "react";
-import type { TUser } from "../../../types/user";
+import type {
+  TDepartmentDataResult,
+  TResult,
+  TUser,
+} from "../../../types/user";
 import { LinearProgress } from "@mui/material";
-
-// Example data.
-// {
-//   [Department]: {
-//       "male": 1,                      // ---> Male Count Summary
-//       "female": 1,                    // ---> Female Count Summary
-//       "ageRange": "XX-XX",            // ---> Range
-//       "hair": {                       // ---> "Color": Color Summary
-//           "Black": 1,
-//           "Blond": 1,
-//           "Chestnut": 1,
-//           "Brown": 1
-//       },
-//       "addressUser": {                // ---> "firstNamelastName": postalCode
-//           "TerryMedhurst": "XXXXX",
-//       }
-//   }
-// },
-
-type TDepartmentDataResult = {
-  male: number;
-  female: number;
-  ageRange: string;
-  hair: Record<string, number>;
-  addressUser: Record<string, string>;
-};
-
-type TResult = Record<string, TDepartmentDataResult>;
 
 export const DataFromApiView: FC = () => {
   const [state, setState] = useState<TResult>({});
@@ -44,8 +20,8 @@ export const DataFromApiView: FC = () => {
 
       const migrateResult = migrateData(result.data.users);
       setState(migrateResult);
-    } catch {
-      console.log("error");
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -65,7 +41,7 @@ export const DataFromApiView: FC = () => {
 };
 
 // ----------------------------------------
-const migrateData = (data: TUser[]): TResult => {
+export const migrateData = (data: TUser[]): TResult => {
   let result: TResult = {};
 
   data.forEach((user) => {
@@ -88,7 +64,7 @@ const migrateData = (data: TUser[]): TResult => {
   return result;
 };
 
-const addUserDataToDepartment = (
+export const addUserDataToDepartment = (
   user: TUser,
   result: TDepartmentDataResult
 ): TDepartmentDataResult => {

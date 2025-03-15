@@ -15,7 +15,11 @@ export const TodoListAll: FC<TTodoListAllProps> = ({ todos, addTodo }) => {
         <Grid2 container rowSpacing={2}>
           {todos.map(({ name, type }) => (
             <Grid2 size={12} key={name}>
-              <TodoItem name={name} onClick={() => addTodo(name, type)} />
+              <TodoItem
+                dataTestId={`todo-item-${name}`}
+                name={name}
+                onClick={() => addTodo(name, type)}
+              />
             </Grid2>
           ))}
         </Grid2>

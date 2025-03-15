@@ -6,6 +6,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 
 import "./styles.css";
+import "./App.css";
 import reportWebVitals from "./reportWebVitals.ts";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "./theme/theme.tsx";

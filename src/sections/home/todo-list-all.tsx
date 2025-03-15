@@ -10,7 +10,7 @@ type TTodoListAllProps = {
 
 export const TodoListAll: FC<TTodoListAllProps> = ({ todos, addTodo }) => {
   return (
-    <Card sx={{ height: "90vh", overflow: "scroll" }}>
+    <Card sx={{ height: "calc(100vh - 60px)", overflow: "scroll" }}>
       <CardContent>
         <Grid2 container rowSpacing={2}>
           {todos.map(({ name, type }) => (

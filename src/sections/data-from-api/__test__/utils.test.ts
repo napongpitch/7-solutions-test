@@ -1,8 +1,6 @@
-import { migrateData } from "../view/data-from-api-view";
-import { addUserDataToDepartment } from "../view/data-from-api-view";
+import { migrateData, addUserDataToDepartment } from "../utils/migrate-data";
 import type { TResult, TUser } from "../../../types/user";
-
-const mockDataFromApi: TUser[] = [
+export const mockDataFromApi: TUser[] = [
   {
     id: 1,
     firstName: "Emily",
@@ -216,6 +214,148 @@ const mockDataFromApi: TUser[] = [
     },
     role: "admin",
   },
+  {
+    id: 4,
+    firstName: "SophiaTest",
+    lastName: "Brown",
+    maidenName: "",
+    age: 40,
+    gender: "female",
+    email: "sophia.brown@x.dummyjson.com",
+    phone: "+81 210-652-2785",
+    username: "sophiab",
+    password: "sophiabpass",
+    birthDate: "1982-11-6",
+    image: "https://dummyjson.com/icon/sophiab/128",
+    bloodGroup: "O-",
+    height: 177.72,
+    weight: 52.6,
+    eyeColor: "Hazel",
+    hair: {
+      color: "White",
+      type: "Wavy",
+    },
+    ip: "214.225.51.195",
+    address: {
+      address: "1642 Ninth Street",
+      city: "Washington",
+      state: "Alabama",
+      stateCode: "AL",
+      postalCode: "32822",
+      coordinates: {
+        lat: 45.289366,
+        lng: 46.832664,
+      },
+      country: "United States",
+    },
+    macAddress: "12:a3:d3:6f:5c:5b",
+    university: "Pepperdine University",
+    bank: {
+      cardExpire: "04/25",
+      cardNumber: "7795895470082859",
+      cardType: "Korean Express",
+      currency: "SEK",
+      iban: "90XYKT83LMM7AARZ8JN958JC",
+    },
+    company: {
+      department: "Research and Development",
+      name: "Schiller - Zieme",
+      title: "Accountant",
+      address: {
+        address: "1896 Washington Street",
+        city: "Dallas",
+        state: "Nevada",
+        stateCode: "NV",
+        postalCode: "88511",
+        coordinates: {
+          lat: 20.086743,
+          lng: -34.577107,
+        },
+        country: "United States",
+      },
+    },
+    ein: "963-113",
+    ssn: "638-461-822",
+    userAgent:
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+    crypto: {
+      coin: "Bitcoin",
+      wallet: "0xb9fc2fe63b2a6c003f1c324c3bfa53259162181a",
+      network: "Ethereum (ERC20)",
+    },
+    role: "admin",
+  },
+  {
+    id: 4,
+    firstName: "SophiaTest2",
+    lastName: "Brown",
+    maidenName: "",
+    age: 50,
+    gender: "female",
+    email: "sophia.brown@x.dummyjson.com",
+    phone: "+81 210-652-2785",
+    username: "sophiab",
+    password: "sophiabpass",
+    birthDate: "1982-11-6",
+    image: "https://dummyjson.com/icon/sophiab/128",
+    bloodGroup: "O-",
+    height: 177.72,
+    weight: 52.6,
+    eyeColor: "Hazel",
+    hair: {
+      color: "White",
+      type: "Wavy",
+    },
+    ip: "214.225.51.195",
+    address: {
+      address: "1642 Ninth Street",
+      city: "Washington",
+      state: "Alabama",
+      stateCode: "AL",
+      postalCode: "32822",
+      coordinates: {
+        lat: 45.289366,
+        lng: 46.832664,
+      },
+      country: "United States",
+    },
+    macAddress: "12:a3:d3:6f:5c:5b",
+    university: "Pepperdine University",
+    bank: {
+      cardExpire: "04/25",
+      cardNumber: "7795895470082859",
+      cardType: "Korean Express",
+      currency: "SEK",
+      iban: "90XYKT83LMM7AARZ8JN958JC",
+    },
+    company: {
+      department: "Research and Development",
+      name: "Schiller - Zieme",
+      title: "Accountant",
+      address: {
+        address: "1896 Washington Street",
+        city: "Dallas",
+        state: "Nevada",
+        stateCode: "NV",
+        postalCode: "88511",
+        coordinates: {
+          lat: 20.086743,
+          lng: -34.577107,
+        },
+        country: "United States",
+      },
+    },
+    ein: "963-113",
+    ssn: "638-461-822",
+    userAgent:
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+    crypto: {
+      coin: "Bitcoin",
+      wallet: "0xb9fc2fe63b2a6c003f1c324c3bfa53259162181a",
+      network: "Ethereum (ERC20)",
+    },
+    role: "admin",
+  },
 ];
 
 describe("Migrate Data From API : ", () => {
@@ -237,10 +377,14 @@ describe("Migrate Data From API : ", () => {
       },
       "Research and Development": {
         male: 0,
-        female: 1,
-        ageRange: "42-42",
-        hair: { White: 1 },
-        addressUser: { SophiaBrown: "32822" },
+        female: 3,
+        ageRange: "40-50",
+        hair: { White: 3 },
+        addressUser: {
+          SophiaBrown: "32822",
+          SophiaTestBrown: "32822",
+          SophiaTest2Brown: "32822",
+        },
       },
     };
     const result = migrateData(mockDataFromApi);

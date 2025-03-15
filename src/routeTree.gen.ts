@@ -11,79 +11,104 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as DataFromApiImport } from './routes/data-from-api'
-import { Route as IndexImport } from './routes/index'
+import { Route as MainImport } from './routes/_main'
+import { Route as MainIndexImport } from './routes/_main/index'
+import { Route as MainDataFromApiImport } from './routes/_main/data-from-api'
 
 // Create/Update Routes
 
-const DataFromApiRoute = DataFromApiImport.update({
-  id: '/data-from-api',
-  path: '/data-from-api',
+const MainRoute = MainImport.update({
+  id: '/_main',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const MainIndexRoute = MainIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainDataFromApiRoute = MainDataFromApiImport.update({
+  id: '/data-from-api',
+  path: '/data-from-api',
+  getParentRoute: () => MainRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/_main': {
+      id: '/_main'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof MainImport
       parentRoute: typeof rootRoute
     }
-    '/data-from-api': {
-      id: '/data-from-api'
+    '/_main/data-from-api': {
+      id: '/_main/data-from-api'
       path: '/data-from-api'
       fullPath: '/data-from-api'
-      preLoaderRoute: typeof DataFromApiImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof MainDataFromApiImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/': {
+      id: '/_main/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof MainIndexImport
+      parentRoute: typeof MainImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface MainRouteChildren {
+  MainDataFromApiRoute: typeof MainDataFromApiRoute
+  MainIndexRoute: typeof MainIndexRoute
+}
+
+const MainRouteChildren: MainRouteChildren = {
+  MainDataFromApiRoute: MainDataFromApiRoute,
+  MainIndexRoute: MainIndexRoute,
+}
+
+const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/data-from-api': typeof DataFromApiRoute
+  '': typeof MainRouteWithChildren
+  '/data-from-api': typeof MainDataFromApiRoute
+  '/': typeof MainIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/data-from-api': typeof DataFromApiRoute
+  '/data-from-api': typeof MainDataFromApiRoute
+  '/': typeof MainIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/data-from-api': typeof DataFromApiRoute
+  '/_main': typeof MainRouteWithChildren
+  '/_main/data-from-api': typeof MainDataFromApiRoute
+  '/_main/': typeof MainIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/data-from-api'
+  fullPaths: '' | '/data-from-api' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/data-from-api'
-  id: '__root__' | '/' | '/data-from-api'
+  to: '/data-from-api' | '/'
+  id: '__root__' | '/_main' | '/_main/data-from-api' | '/_main/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DataFromApiRoute: typeof DataFromApiRoute
+  MainRoute: typeof MainRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  DataFromApiRoute: DataFromApiRoute,
+  MainRoute: MainRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -96,15 +121,23 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/data-from-api"
+        "/_main"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/_main": {
+      "filePath": "_main.tsx",
+      "children": [
+        "/_main/data-from-api",
+        "/_main/"
+      ]
     },
-    "/data-from-api": {
-      "filePath": "data-from-api.tsx"
+    "/_main/data-from-api": {
+      "filePath": "_main/data-from-api.tsx",
+      "parent": "/_main"
+    },
+    "/_main/": {
+      "filePath": "_main/index.tsx",
+      "parent": "/_main"
     }
   }
 }

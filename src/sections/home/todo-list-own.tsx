@@ -15,7 +15,7 @@ export const TodoListOwn: FC<TTodoListOwnProps> = ({
   removeTodo,
 }) => {
   return (
-    <Card sx={{ height: "90vh", overflow: "scroll" }}>
+    <Card sx={{ height: "calc(100vh - 60px)", overflow: "scroll" }}>
       <CardHeader title={todoName} />
       <CardContent>
         <Grid2 container rowSpacing={2}>
